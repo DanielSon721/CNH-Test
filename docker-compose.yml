@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  backend:
+    image: danielson/cnh-backend:latest
+    container_name: cnh-backend
+    ports:
+      - "5000:5000"
+    restart: always
+
+  frontend:
+    image: danielson/cnh-frontend:latest
+    container_name: cnh-frontend
+    ports:
+      - "5173:5173"
+    restart: always
+
