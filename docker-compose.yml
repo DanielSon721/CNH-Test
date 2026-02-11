@@ -1,15 +1,26 @@
 services:
-  segmenter-fe:
+  segmenter-fe-components:
     build:
       context: ./Segmenter-FE-Components
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
-  segmenter-be:
+
+  segmenter-be-components:
     build:
       context: ./Segmenter-BE-Components
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/hello"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
