@@ -1,18 +1,18 @@
 services:
-  segmenter-fe:
-    build:
-      context: ./Segmenter-FE-Components
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    command: ["yarn", "serve"]
-    restart: unless-stopped
-
   segmenter-be:
     build:
       context: ./Segmenter-BE-Components
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    entrypoint: ["python", "app.py"]
-    restart: unless-stopped
+    command: python app.py
+    depends_on:
+      - segmenter-fe
+
+  segmenter-fe:
+    build:
+      context: ./Segmenter-FE-Components
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    command: ./serve.sh
