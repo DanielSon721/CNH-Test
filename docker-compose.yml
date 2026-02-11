@@ -1,18 +1,15 @@
 services:
-  segmenter-be:
-    build:
-      context: ./Segmenter-BE-Components
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-
   segmenter-fe:
     build:
       context: ./Segmenter-FE-Components
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      - segmenter-be
+    restart: unless-stopped
+  segmenter-be:
+    build:
+      context: ./Segmenter-BE-Components
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
     restart: unless-stopped
