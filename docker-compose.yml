@@ -1,17 +1,29 @@
-version: "3.9"
-
 services:
-  backend:
-    image: danielson/cnh-backend:latest
-    container_name: cnh-backend
+  segmenter-be:
+    image: danielson05/cnh_test-segmenter-be:latest
+    build:
+      context: ./Segmenter-BE-Components
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    restart: always
-
-  frontend:
-    image: danielson/cnh-frontend:latest
-    container_name: cnh-frontend
+      - "8000:8000"
+    command: python app.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"] # Assuming a /health endpoint will be added
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  segmenter-fe:
+    image: danielson05/cnh_test-segmenter-fe:latest
+    build:
+      context: ./Segmenter-FE-Components
+      dockerfile: Dockerfile
     ports:
-      - "5173:5173"
-    restart: always
-
+      - "8080:8080"
+    command: node node_modules/serve/bin/serve.js dist -p 8080
+    depends_on:
+      - segmenter-be
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
