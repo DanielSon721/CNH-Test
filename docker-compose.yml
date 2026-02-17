@@ -8,6 +8,7 @@ services:
       - "8080:8080"
     depends_on:
       - segmenter-be
+    restart: unless-stopped
   segmenter-be:
     image: danielson05/cnh_test-segmenter-be:latest
     build:
@@ -15,4 +16,4 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-
+    restart: unless-stopped
