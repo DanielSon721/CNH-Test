@@ -8,8 +8,6 @@ services:
       - "8080:8080"
     depends_on:
       - segmenter-be
-    environment:
-      VITE_API_URL: http://segmenter-be:8000
   segmenter-be:
     image: danielson05/cnh_test-segmenter-be:latest
     build:
